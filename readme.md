@@ -9,3 +9,9 @@ python项目中必须包含一个 requirements.txt 文件，用于记录所有�
 ```
 pip freeze >requirements.txt
 ```
+
+# 运行测试用例
+1. python运行unittest测试用例
+``` python case\test_requests.py ```
+2. pytest
+``` pytest ```
