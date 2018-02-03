@@ -47,6 +47,14 @@ class TestList(unittest.TestCase):
         print data[::-1]
         assert data[::-1] == [7, 6, 5, 4, 3, 2, 1]
 
+    def test_list_comprehension(self):
+        '列表解析'
+        print [i for i in data if i % 2 == 0]
+        assert [i for i in data if i % 2 == 0] == [2, 4, 6]
+
+        print [i**2 for i in range(8)]
+        assert [i**2 for i in range(8)] == [0, 1, 4, 9, 16, 25, 36, 49]
+
 
 if __name__ == '__main__':
     unittest.main()
