@@ -1,10 +1,10 @@
 # coding=utf-8
 import unittest
-import os
+import os, time
 import pytest
 
 from flask import Flask, render_template
-from flask import request, make_response
+from flask import request, make_response, url_for, redirect
 
 app = Flask(__name__, static_folder='static', static_url_path='/public')
 
@@ -41,12 +41,12 @@ def test(name=None):
 
 @app.route('/pytest/<name>')
 def runpytest(name=None):
-    pytest.main(['-x', 'pytest/test_%s.py'%name])
-
-    data = {
-        "name": name,
-    }
-    return render_template('test.html', data=data)
+    reportfile = 'py_report_%s.html' % time.time()
+    result = pytest.main(
+        ['-x',
+         'pytest/test_%s.py' % name,
+         '--html=static\%s' % reportfile])
+    return redirect('/public/%s' % reportfile)
 
 
 @app.route("/about")
