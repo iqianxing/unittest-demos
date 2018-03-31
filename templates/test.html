@@ -1,0 +1,14 @@
+<!doctype html>
+<title>Unittest Report</title>
+{% if data.name %}
+<h1>Run test {{ data.name }}!</h1>
+<pre>
+  testsRun: {{ data.testsRun }} 
+  failures: {{ data.failures }} 
+  errors: {{ data.errors }} 
+  skipped: {{ data.skipped }}
+  message: {{data.errorsMessage}}
+</pre>
+{% else %}
+<h1>None test selected!</h1>
+{% endif %}
