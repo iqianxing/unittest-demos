@@ -42,7 +42,7 @@ def test(name=None):
 @app.route('/pytest/<name>')
 def runpytest(name=None):
     reportfile = 'py_report_%s.html' % time.time()
-    result = pytest.main(
+    pytest.main(
         ['-x',
          'pytest/test_%s.py' % name,
          '--html=static\%s' % reportfile])
