@@ -5,9 +5,14 @@
 <body>
   <h1>测试用例</h1>
   <table>
-  {% for test in tests if test.endswith('.py')==True %}    
+  {% for test in tests %}    
     <tr>
       <td><a href="/test/{{ test }}">{{ test }}</a></td>
+    </tr>
+  {% endfor %}
+  {% for test in pytests %}    
+    <tr>
+      <td><a href="/pytest/{{ test }}">{{ test }}</a></td>
     </tr>
   {% endfor %}
   </table>

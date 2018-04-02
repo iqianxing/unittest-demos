@@ -12,34 +12,20 @@ app = Flask(__name__, static_folder='static', static_url_path='/public')
 @app.route("/")
 def index():
     case_path = os.path.join(os.path.dirname(__file__), "test")
-    tests = os.listdir(case_path)
-    return render_template("index.html",tests = tests)
+    tests = [ test for test in os.listdir(case_path) if test.endswith('.py')==True]
+    pytest_case_path = os.path.join(os.path.dirname(__file__), "pytest")
+    pytests = [ test for test in os.listdir(pytest_case_path) if test.endswith('.py')==True]
+    return render_template("index.html",tests = tests, pytests= pytests)
 
 
 @app.route('/test/<name>')
 def test(name=None):
-    case_path = os.path.join(os.path.dirname(__file__), "test")
-    discover = unittest.defaultTestLoader.discover(
-        case_path, pattern=('%s' % name), top_level_dir=None)
-    print discover
-    runner = unittest.TextTestRunner()
-    result = runner.run(discover)
-
-    #生成测试报告
-    print "testsRun:%s" % result.testsRun
-    print "failures:%s" % len(result.failures)
-    print "errors:%s" % len(result.errors)
-    print "skipped:%s" % len(result.skipped)
-
-    data = {
-        "name": name,
-        "testsRun": result.testsRun,
-        "failures": len(result.failures),
-        "errors": len(result.errors),
-        "skipped": len(result.skipped),
-    }
-    return render_template('test.html', data=data)
-
+    reportfile = 'py_report_%s.html' % time.time()
+    pytest.main(
+        ['-x',
+         'test/%s' % name,
+         '--html=static\%s' % reportfile])
+    return redirect('/public/%s' % reportfile)
 
 @app.route('/pytest/<name>')
 def runpytest(name=None):
