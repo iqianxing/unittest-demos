@@ -11,14 +11,16 @@ app = Flask(__name__, static_folder='static', static_url_path='/public')
 
 @app.route("/")
 def index():
-    return 'Hello, world!'
+    case_path = os.path.join(os.path.dirname(__file__), "test")
+    tests = os.listdir(case_path)
+    return render_template("index.html",tests = tests)
 
 
 @app.route('/test/<name>')
 def test(name=None):
     case_path = os.path.join(os.path.dirname(__file__), "test")
     discover = unittest.defaultTestLoader.discover(
-        case_path, pattern=('test_%s.py' % name), top_level_dir=None)
+        case_path, pattern=('%s' % name), top_level_dir=None)
     print discover
     runner = unittest.TextTestRunner()
     result = runner.run(discover)
@@ -44,7 +46,7 @@ def runpytest(name=None):
     reportfile = 'py_report_%s.html' % time.time()
     pytest.main(
         ['-x',
-         'pytest/test_%s.py' % name,
+         'pytest/%s' % name,
          '--html=static\%s' % reportfile])
     return redirect('/public/%s' % reportfile)
 

@@ -1,0 +1,14 @@
+<!doctype html>
+<head>
+  <title>测试用例</title>
+</head>
+<body>
+  <h1>测试用例</h1>
+  <table>
+  {% for test in tests if test.endswith('.py')==True %}    
+    <tr>
+      <td><a href="/test/{{ test }}">{{ test }}</a></td>
+    </tr>
+  {% endfor %}
+  </table>
+</body>
