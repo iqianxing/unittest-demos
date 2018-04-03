@@ -24,7 +24,7 @@ def test(name=None):
     pytest.main(
         ['-x',
          'test/%s' % name,
-         '--html=static\%s' % reportfile])
+         '--html=static%s%s' % (os.sep, reportfile)])
     return redirect('/public/%s' % reportfile)
 
 @app.route('/pytest/<name>')
@@ -33,7 +33,7 @@ def runpytest(name=None):
     pytest.main(
         ['-x',
          'pytest/%s' % name,
-         '--html=static\%s' % reportfile])
+         '--htmlstatic%s%s' % (os.sep, reportfile)])
     return redirect('/public/%s' % reportfile)
 
 
@@ -43,4 +43,8 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(
+        host='0.0.0.0',
+        port= 80,
+        debug= False
+    )
