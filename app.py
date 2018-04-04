@@ -23,7 +23,7 @@ def test(name=None):
     reportfile = 'py_report_%s.html' % time.time()
     pytest.main(
         ['-x',
-         'test/%s' % name,
+         'test/%s.py' % name,
          '--html=static%s%s' % (os.sep, reportfile)])
     return redirect('/public/%s' % reportfile)
 
@@ -32,7 +32,7 @@ def runpytest(name=None):
     reportfile = 'py_report_%s.html' % time.time()
     pytest.main(
         ['-x',
-         'pytest/%s' % name,
+         'pytest/%s.py' % name,
          '--htmlstatic%s%s' % (os.sep, reportfile)])
     return redirect('/public/%s' % reportfile)
 
