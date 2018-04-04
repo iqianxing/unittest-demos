@@ -33,7 +33,7 @@ def runpytest(name=None):
     pytest.main(
         ['-x',
          'pytest/%s.py' % name,
-         '--htmlstatic%s%s' % (os.sep, reportfile)])
+         '--html=static%s%s' % (os.sep, reportfile)])
     return redirect('/public/%s' % reportfile)
 
 
