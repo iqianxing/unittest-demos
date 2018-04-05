@@ -4,7 +4,7 @@ import unittest
 class TestFileIter(unittest.TestCase):
 
     def test_bigfile_iter(self):
-      '迭代器的使用：使用迭代器处理大文本文件的每一行数据'
+      '使用迭代器处理大文本文件，每次读取一行数据'
       fp = open("./static/bigtextfile.txt")
       for line in fp:
         temp = line.split(":")
@@ -12,7 +12,7 @@ class TestFileIter(unittest.TestCase):
       fp.close()
     
     def test_bigfile(self):
-      '迭代器的使用：使用迭代器处理大文本文件的每一行数据'
+      '一次读取所有行，遍历每一行数据'
       fp = open("./static/bigtextfile.txt")
       lines = fp.readlines()
       for line in lines:
