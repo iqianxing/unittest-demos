@@ -23,7 +23,13 @@ def index():
         for test in os.listdir(pytest_case_path)
         if test.endswith('.py') == True
     ]
-    return render_template("index.html", tests=tests, pytests=pytests)
+    report_path = os.path.join(os.path.dirname(__file__), "static")
+    reports = [
+        report for report in os.listdir(report_path)
+        if report.endswith('.html') == True
+    ]
+
+    return render_template("index.html", tests=tests, pytests=pytests, reports=reports)
 
 
 @app.route('/test/<name>')

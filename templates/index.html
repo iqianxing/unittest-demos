@@ -3,17 +3,29 @@
   <title>测试用例</title>
 </head>
 <body>
-  <h1>测试用例</h1>
-  <table>
-  {% for test in tests %}    
-    <tr>
-      <td><a href="/test/{{ test }}">{{ test }}</a></td>
-    </tr>
-  {% endfor %}
-  {% for test in pytests %}    
-    <tr>
-      <td><a href="/pytest/{{ test }}">{{ test }}</a></td>
-    </tr>
-  {% endfor %}
-  </table>
+  <div>
+    <h1>测试用例</h1>
+    <table>
+    {% for test in tests %}    
+      <tr>
+        <td><a href="/test/{{ test }}">{{ test }}</a></td>
+      </tr>
+    {% endfor %}
+    {% for test in pytests %}    
+      <tr>
+        <td><a href="/pytest/{{ test }}">{{ test }}</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+  <div>    
+    <h1>测试报告</h1>
+    <table>
+    {% for report in reports %}    
+      <tr>
+        <td><a href="/static/{{ report }}">{{ report }}</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
 </body>
