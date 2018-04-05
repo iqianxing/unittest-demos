@@ -1,40 +1,53 @@
 # coding=utf-8
 import unittest
 import os, time
+import re
 import pytest
 
 from flask import Flask, render_template
 from flask import request, make_response, url_for, redirect
 
-app = Flask(__name__, static_folder='static', static_url_path='/public')
+app = Flask(__name__)
 
 
 @app.route("/")
 def index():
     case_path = os.path.join(os.path.dirname(__file__), "test")
-    tests = [ test for test in os.listdir(case_path) if test.endswith('.py')==True]
+    tests = [
+        re.match('test_(\w+)\.py', test).group(1)
+        for test in os.listdir(case_path) if test.endswith('.py') == True
+    ]
     pytest_case_path = os.path.join(os.path.dirname(__file__), "pytest")
-    pytests = [ test for test in os.listdir(pytest_case_path) if test.endswith('.py')==True]
-    return render_template("index.html",tests = tests, pytests= pytests)
+    pytests = [
+        re.match('test_(\w+)\.py', test).group(1)
+        for test in os.listdir(pytest_case_path)
+        if test.endswith('.py') == True
+    ]
+    return render_template("index.html", tests=tests, pytests=pytests)
 
 
 @app.route('/test/<name>')
 def test(name=None):
-    reportfile = 'py_report_%s.html' % time.time()
-    pytest.main(
-        ['-x',
-         'test/%s.py' % name,
-         '--html=static%s%s' % (os.sep, reportfile)])
-    return redirect('/public/%s' % reportfile)
+    reportname = 'report_{name}_{time}.html'.format(
+        name=name, time=time.time())
+    testname = "test_" + name + ".py"
+    pytest.main([
+        '-x', 'test{sep}{testname}'.format(sep=os.sep, testname=testname),
+        '--html=static{sep}{report}'.format(sep=os.sep, report=reportname)
+    ])
+    return redirect('/static/{report}'.format(report=reportname))
+
 
 @app.route('/pytest/<name>')
 def runpytest(name=None):
-    reportfile = 'py_report_%s.html' % time.time()
-    pytest.main(
-        ['-x',
-         'pytest/%s.py' % name,
-         '--html=static%s%s' % (os.sep, reportfile)])
-    return redirect('/public/%s' % reportfile)
+    reportname = 'report_{name}_{time}.html'.format(
+        name=name, time=time.time())
+    testname = "test_" + name + ".py"
+    pytest.main([
+        '-x', 'pytest{sep}{testname}'.format(sep=os.sep, testname=testname),
+        '--html=static{sep}{report}'.format(sep=os.sep, report=reportname)
+    ])
+    return redirect('/static/{report}'.format(report=reportname))
 
 
 @app.route("/about")
@@ -43,8 +56,4 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run(
-        host='0.0.0.0',
-        port= 80,
-        debug= False
-    )
+    app.run(host='0.0.0.0', port=80, debug=False)

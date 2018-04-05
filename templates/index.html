@@ -7,12 +7,12 @@
   <table>
   {% for test in tests %}    
     <tr>
-      <td><a href="/test/{{ test.replace(".py","") }}">{{ test }}</a></td>
+      <td><a href="/test/{{ test }}">{{ test }}</a></td>
     </tr>
   {% endfor %}
   {% for test in pytests %}    
     <tr>
-      <td><a href="/pytest/{{ test.replace(".py","") }}">{{ test }}</a></td>
+      <td><a href="/pytest/{{ test }}">{{ test }}</a></td>
     </tr>
   {% endfor %}
   </table>
