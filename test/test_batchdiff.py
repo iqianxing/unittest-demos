@@ -5,6 +5,10 @@ from parameterized import parameterized, param
 diffApis = [
     # diff apis
     {
+        "oldapi":"https://easy-mock.com/mock/5b6b06f9a40bfb27425bbb6a/jsondiff/v1/demo",
+        "newapi":"https://easy-mock.com/mock/5b6b06f9a40bfb27425bbb6a/jsondiff/v2/demo"
+    },
+    {
         "oldapi":"https://easy-mock.com/mock/5b6b06f9a40bfb27425bbb6a/jsondiff/v1/hello",
         "newapi":"https://easy-mock.com/mock/5b6b06f9a40bfb27425bbb6a/jsondiff/v2/hello"
     },
