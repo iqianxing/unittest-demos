@@ -1,20 +1,36 @@
+# -*- coding:utf-8 -*-
 import unittest
 import json
 
+
 class TestDictCompare(unittest.TestCase):
-    def test_jsondiff_same(self):
-      self.maxDiff=None
-      oldJson = json.loads('{"title":"com.tencent.news","fullTitle":"Androbugs report com.tencent.news","timedOut":false,"duration":0,"state":"passed","speed":"fast","pass":true,"fail":false,"pending":false}')
-      newJson = json.loads('{"title":"com.tencent.news","fullTitle":"Androbugs report com.tencent.news","timedOut":false,"duration":0,"state":"passed","speed":"fast","pass":true,"fail":false,"pending":false}')
-      self.assertDictEqual(oldJson,newJson)
+    def test_json_same_keys(self):
+        self.maxDiff=None
+        oldJson = json.loads('{"hello":"world","success":true}')
+        newJson = json.loads('{"hello":"world","success":true}')
+        self.assertDictEqual(oldJson, newJson)
 
-    def test_jsondiff_different(self):
-      self.maxDiff=None
-      oldJson = json.loads('{"title":"com.tencent.news","fullTitle":"Androbugs report com.tencent.news","timedOut":false,"duration":0,"state":"passed","speed":"fast","pass":true,"fail":false,"pending":false}')
-      newJson = json.loads('{"title":"com.tencent.news2","fullTitle":"Androbugs report com.tencent.news","timedOut":false,"duration":0,"state":"passed","speed":"fast","pass":true,"fail":false,"pending":false}')
-      self.assertDictEqual(oldJson,newJson)
+    def test_json_diff_keyOrders(self):
+        self.maxDiff=None
+        oldJson = json.loads('{"hello":"world","success":true}')
+        newJson = json.loads('{"success":true,"hello":"world"}')
+        self.assertDictEqual(oldJson, newJson)
 
+    def test_json_diff_values(self):
+        self.maxDiff=None
+        oldJson = json.loads('{"hello":"world","success":true}')
+        newJson = json.loads('{"success":true,"hello":"wOrld"}')
+        self.assertDictEqual(oldJson, newJson)
+
+    def test_json_diff_sub_nodes(self):
+        self.maxDiff=None
+        oldJson = json.loads(
+            '{"user":{"name":"devops","age":10},"hello":"world","success":true}'
+        )
+        newJson = json.loads(
+            '{"success":true,"hello":"world","user":{"name":"test","age":10}}')
+        self.assertDictEqual(oldJson, newJson)
 
 
 if __name__ == '__main__':
-  unittest.main()
+    unittest.main()
