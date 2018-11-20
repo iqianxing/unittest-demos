@@ -33,8 +33,7 @@ class TestParameterized(unittest.TestCase):
     @parameterized.expand(data.keys())
     def test_length(self, name):
         newData = data.copy()
-        newData[
-            name] = "长度超过50个字符的字符串：欢迎各位学习mocha，mocha真的很好用。This is just a test 0e5b2e73aabfedbbf2a21e83cb4bafb9：字段长度检查(假设每个字段参数长度不超过50个字符)"
+        newData[name] = "长度超过50个字符的字符串：欢迎各位学习mocha，mocha真的很好用。This is just a test 0e5b2e73aabfedbbf2a21e83cb4bafb9：字段长度检查(假设每个字段参数长度不超过50个字符)"
         r = requests.get(
             "http://recommend.browser.qq.com/feeds/getRecommendList",
             params=newData,

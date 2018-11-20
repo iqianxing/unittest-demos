@@ -31,7 +31,7 @@ diffApis = [
 ]
 
 
-class TestParameterized(unittest.TestCase):
+class BatchDiffTest(unittest.TestCase):
     @parameterized.expand(
         [param("diff test",kv) for kv in diffApis])
     def test_batchdiff(self, _, kv):
